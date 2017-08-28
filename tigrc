@@ -1,0 +1,52 @@
+# .tigrc - tig configuration file
+# http://jonas.nitro.dk/tig/tigrc.5.html
+#
+# Synopsis:
+# set <variable> = <value>
+# bind <keymap> <key> <action>
+# color <area> <fgcolor> <bgcolor> [attributes]
+# source <path>
+#
+
+#######################################
+# Visualization
+#######################################
+
+set id-width = 14
+set blame-options = -C -C -C
+set line-graphics = utf-8
+set horizontal-scroll = 33%
+set show-notes = yes
+set show-changes = yes
+set vertical-split = yes
+set split-view-height = 70%
+set tab-size = 2
+set diff-context = 1
+set ignore-space = some
+set commit-order = topo
+set ignore-case = no
+set wrap-lines = no
+set focus-child = yes
+
+
+#######################################
+# Bind Keymaps
+#######################################
+
+bind generic I !@sh -c "echo -n %(commit) | awk '{print $2}' | pbcopy"
+
+
+#######################################
+# Color Settings
+#######################################
+
+color default white black
+color cursor default magenta
+color date cyan default
+color delimiter cyan default
+color line-number yellow default
+color diff-header yellow default
+color diff-index blue default
+color diff-chunk magenta default
+color "Reported-by:" green default
+color graph-commit cyan default
