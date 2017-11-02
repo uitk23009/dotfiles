@@ -1,5 +1,3 @@
 # My vim setting
 
-* use plugin manager Vundle (https://github.com/VundleVim/Vundle.vim)
-
-* vim awesome (http://vimawesome.com/)
+* Use plugin manager vim-plug (https://github.com/junegunn/vim-plug)
