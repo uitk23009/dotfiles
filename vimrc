@@ -8,11 +8,14 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'Yggdroot/indentLine'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'scrooloose/syntastic'
 Plug 'tomtom/tcomment_vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
+Plug 'posva/vim-vue'
+Plug 'kylef/apiblueprint.vim'
+Plug 'mattn/emmet-vim'
+Plug 'tpope/vim-surround'
 call plug#end()
 
 set rtp+=~/.fzf
@@ -70,36 +73,9 @@ endif
     let g:airline_theme='term'
 "}
 
-"NERDTree{
-    map <F2> :NERDTreeToggle<CR>
-    let NERDTreeShowBookmarks = 1
-    let NERDTreeShowHidden = 1
-"}
-
-"syntastic{
-    set statusline+=%#warningmsg#
-    set statusline+=%{SyntasticStatuslineFlag()}
-    set statusline+=%*
-
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_auto_loc_list = 1
-    let g:syntastic_check_on_open = 1
-    let g:syntastic_check_on_wq = 0
-"}
-
-"nerdcommenter{
-    let mapleader=","
-"}
-
 "t-comment{
-    map <c-/> <c-_><c-_>
+    map <c-/> <c-_>
     map <c-b> <c-_>b
-"}
-
-"neocomplete{
-    let g:acp_enableAtStartup = 0
-    let g:neocomplete#enable_at_startup = 1
-    let g:neocomplete#enable_smart_case = 1
 "}
 
 "indentLine{
@@ -107,7 +83,10 @@ endif
     let g:indentLine_conceallevel = 2
 "}
 
+"easymotion{
+    let mapleader=","
+"}
+
 "use j and k choose complete
 inoremap <expr> j pumvisible() ? '<C-n>' : 'j'
 inoremap <expr> k pumvisible() ? '<C-p>' : 'k'
-
