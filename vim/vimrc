@@ -23,9 +23,6 @@ call plug#end()
 
 set rtp+=~/.fzf
 
-" import file
-source ~/.vim/abbr/abbr.vim
-
 "general settings
 filetype plugin on
 filetype indent on
