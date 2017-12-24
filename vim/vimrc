@@ -16,14 +16,21 @@ Plug 'posva/vim-vue'
 Plug 'kylef/apiblueprint.vim'
 Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-surround'
+Plug 'gregsexton/matchtag'
+Plug 'tpope/vim-repeat'
+Plug 'dracula/vim'
 call plug#end()
 
 set rtp+=~/.fzf
+
+" import file
+source ~/.vim/abbr/abbr.vim
 
 "general settings
 filetype plugin on
 filetype indent on
 syntax on
+color dracula
 " Encoding
 set encoding=utf-8
 set fileencoding=utf-8
@@ -58,6 +65,7 @@ set number
 set cursorline
 set ruler
 set t_Co=256
+set pastetoggle=<F9>
 
 
 if exists('$TMUX')
@@ -83,10 +91,17 @@ endif
     let g:indentLine_conceallevel = 2
 "}
 
-"easymotion{
+"learder{
     let mapleader=","
 "}
+
 
 "use j and k choose complete
 inoremap <expr> j pumvisible() ? '<C-n>' : 'j'
 inoremap <expr> k pumvisible() ? '<C-p>' : 'k'
+
+"abbreviation
+imap <c+]> <ESC>i<RIGHT>
+
+"import settings
+so ~/.vim/settings.vim
