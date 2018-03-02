@@ -1,0 +1,30 @@
+[user]
+  name = WalkerHo
+  email = uitk23009@gmail.com
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  ui = true
+[alias]
+  history = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+  files = "!f() { git diff --name-status $1^ $1; }; f"
+  type = cat-file -t
+  dump = cat-file -p
+  fetch = fetch --tags
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[push]
+  default = matching
+  followTags = true
+[diff]
+  tool = icdiff
+[core]
+  excludesfile = ~/.gitignore
+  editor = vim
+  quotepath = false
+  filemode = true
+[branch]
+  autosetuprebase = always
+[pager]
+  diff = diff-so-fancy | less --tabs=4 -RFX
+  show = diff-so-fancy | less --tabs=4 -RFX
