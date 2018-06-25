@@ -15,13 +15,16 @@ Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-surround'
 Plug 'gregsexton/matchtag'
 Plug 'tpope/vim-repeat'
-Plug 'lilydjwg/colorizer'
+Plug 'ap/vim-css-color'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
-Plug 'nvie/vim-flake8'
 Plug 'bkad/CamelCaseMotion'
+Plug 'junegunn/vim-slash'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'tpope/vim-unimpaired'
+Plug 'w0rp/ale'
 call plug#end()
 
 set rtp+=~/.fzf
@@ -29,8 +32,8 @@ set rtp+=~/.fzf
 set nocompatible
 
 "general settings
-filetype plugin on
-filetype indent on
+filetype on
+filetype plugin indent on
 
 syntax on
 " Encoding
@@ -73,9 +76,10 @@ set pastetoggle=<F9>
 
 augroup vueSyntax
     autocmd!
-    " autocmd BufRead,BufNewFile *.vue set filetype=html
+    autocmd BufRead,BufNewFile *.vue setlocal filetype=html.javascript.css.vue
     autocmd BufEnter * :syntax sync fromstart
 augroup END
+
 
 if exists('$TMUX')
     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
@@ -84,6 +88,28 @@ else
     let &t_SI = "\<Esc>]50;CursorShape=1\x7"
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
+
+"dictionary{
+    set complete+=k
+    set iskeyword+=-
+    let dict = '~/.vim/dict/'
+    let extension = expand('%:e')
+    let type = expand('%:r:e')
+    if extension == "vue"
+        exe 'set dictionary+='.dict.'css.dic'
+        exe 'set dictionary+='.dict.'html.dic'
+        exe 'set dictionary+='.dict.'js.dic'
+    else
+        if type == "spec"
+            exe 'set dictionary+='.dict.'vue-test-utils.dic'
+            exe 'set dictionary+='.dict.'jest.dic'
+        endif
+        let filepath = dict.extension.'.dic'
+        if !empty(glob(filepath))
+            exe 'set dictionary+='.dict.extension.'.dic'
+        endif
+    endif
+"}
 
 "airline{
     set laststatus=2
@@ -111,7 +137,7 @@ endif
 "}
 
 "ultisnips {
-    let g:UltiSnipsExpandTrigger="<c-]>"
+    let g:UltiSnipsExpandTrigger="<c-p>"
     let g:UltiSnipsJumpForwardTrigger="<c-k>"
     let g:UltiSnipsJumpBackwardTrigger="<c-j>"
 "}
@@ -133,9 +159,10 @@ endif
     sunmap ge
 "}
 
+"ale {
+    let g:ale_fix_on_save = 1
+"}
+
 "use j and k choose complete
 inoremap <expr> j pumvisible() ? '<C-n>' : 'j'
 inoremap <expr> k pumvisible() ? '<C-p>' : 'k'
-
-" setting
-so ~/.vim/settings.vim
