@@ -23,8 +23,11 @@
   editor = vim
   quotepath = false
   filemode = true
+  ignorecase = false
 [branch]
   autosetuprebase = always
+[branch "master"]
+  mergeoptions = --no-ff
 [pager]
   diff = diff-so-fancy | less --tabs=4 -RFX
   show = diff-so-fancy | less --tabs=4 -RFX
