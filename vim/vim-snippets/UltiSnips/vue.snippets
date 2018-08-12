@@ -1,0 +1,78 @@
+# This snippet file enables vue files to use tabs for html, js and css. It also
+# includes some vue-specific html-like snippets, as well as some general
+# boilerplate code for vue.
+
+extends html, javascript, css
+
+# These snippets form a port of Sarah Drasner's vue-sublime-snippets
+
+# some html-like snippets
+
+snippet vbase
+    <template>
+    </template>
+
+    <script>
+    export default{
+
+    }
+    </script>
+
+    <style lang="scss" scoped>
+
+    </style>
+endsnippet
+
+snippet vdata
+    data () {
+      return {
+
+      }
+    }
+endsnippet
+
+snippet vfilter
+	filters: {
+	  ${1: fnName} () {
+	  }
+	}
+endsnippet
+
+snippet vfor
+	<div v-for="item in items" :key="item.id">
+	  {{ item }}
+	</div>
+endsnippet
+
+snippet vimport
+	import ${1: name} from '${2: modulePath}';
+endsnippet
+
+snippet vprops
+${1:propsName}: {
+    type: ${2: type},
+    default: ${3: value}
+},
+endsnippet
+
+snippet vcomputed
+computed: {
+
+}
+endsnippet
+
+snippet vwatch
+watch: {
+}
+endsnippet
+
+snippet vmethods
+methods: {
+
+}
+endsnippet
+
+snippet vlife
+${1:lifecycle} () {
+}
+endsnippet
