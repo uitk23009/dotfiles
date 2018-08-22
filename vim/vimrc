@@ -1,8 +1,7 @@
 filetype off
 
 call plug#begin('~/.vim/plugged')
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'jiangmiao/auto-pairs'
@@ -10,22 +9,29 @@ Plug 'tomtom/tcomment_vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
-Plug 'posva/vim-vue'
-Plug 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim', {'for': ['vue', 'html']}
 Plug 'tpope/vim-surround'
 Plug 'gregsexton/matchtag'
 Plug 'tpope/vim-repeat'
 Plug 'ap/vim-css-color'
+Plug 'airblade/vim-gitgutter'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'bkad/CamelCaseMotion'
 Plug 'junegunn/vim-slash'
-Plug 'cakebaker/scss-syntax.vim'
+Plug 'cakebaker/scss-syntax.vim', {'for': ['vue', 'scss']}
 Plug 'tpope/vim-unimpaired'
+Plug 'posva/vim-vue', {'for': 'vue'}
 Plug 'w0rp/ale'
+Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+Plug 'ap/vim-buftabline'
+Plug 'svermeulen/vim-easyclip'
+Plug 'nightsense/stellarized'
+Plug 'skreek/skeletor.vim'
 call plug#end()
+
 
 set rtp+=~/.fzf
 
@@ -47,7 +53,7 @@ set ttyfast
 " Fix backspace indent
 set backspace=indent,eol,start
 
-" Tabs
+" Indentation
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -55,12 +61,13 @@ set shiftround
 set smarttab
 set expandtab
 set autoindent
+set smartindent
+set smartcase
 
 " Searching
 set incsearch
 set hlsearch
 set ic
-set smartcase
 
 " Directories for wap files
 set nobackup
@@ -72,11 +79,28 @@ set number
 set cursorline
 set ruler
 set t_Co=256
-set pastetoggle=<F9>
+
+" buffer
+set nostartofline
+
+" performance
+set lazyredraw
+set hidden
+set re=1
+
+set termguicolors
+if &term =~# '^screen'
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
+colorscheme stellarized
+
+packadd! matchit
 
 augroup vueSyntax
     autocmd!
-    autocmd BufRead,BufNewFile *.vue setlocal filetype=html.javascript.css.vue
+    " autocmd BufRead,BufNewFile *.vue set filetype=vue
     autocmd BufEnter * :syntax sync fromstart
 augroup END
 
@@ -111,9 +135,11 @@ endif
     endif
 "}
 
-"airline{
+"lightline{
     set laststatus=2
-    let g:airline_theme='term'
+    let g:lightline = {
+        \ 'colorscheme': 'wombat',
+        \ }
 "}
 
 "t-comment{
@@ -132,8 +158,16 @@ endif
 "}
 
 "emmet {
-    " let g:user_emmet_expandabbr_key = "<Tab>"
     autocmd FileType vue,html imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+    let g:use_emmet_complete_tag = 1
+    " let g:user_emmet_settings = {
+    " \   'html': {
+    " \       'indent_blockelement': 1
+    " \   },
+    " \   'vue': {
+    " \       'extends': 'html'
+    " \   }
+    " \}
 "}
 
 "ultisnips {
@@ -161,8 +195,94 @@ endif
 
 "ale {
     let g:ale_fix_on_save = 1
+    let g:ale_linters = { 'python': ['flake8'] }
+    let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+"}
+
+"fzf {
+    function! s:find_git_root()
+        return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+    endfunction
+
+    command! ProjectFiles execute 'Files' s:find_git_root()
+
+    nnoremap <c-p> :ProjectFiles<CR>
+"}
+
+"buffer {
+    " navigation
+    nnoremap <Leader>b :bp<CR>
+    nnoremap <Leader>f :bn<CR>
+    " buffer list
+    nnoremap <Leader>l :ls<CR>
+"}
+
+"buftabline {
+    let g:buftabline_numbers = 2
+    let g:buftabline_indicators = 1
+    " mapping
+    nmap <leader>1 <Plug>BufTabLine.Go(1)
+    nmap <leader>2 <Plug>BufTabLine.Go(2)
+    nmap <leader>3 <Plug>BufTabLine.Go(3)
+    nmap <leader>4 <Plug>BufTabLine.Go(4)
+    nmap <leader>5 <Plug>BufTabLine.Go(5)
+    nmap <leader>6 <Plug>BufTabLine.Go(6)
+    nmap <leader>7 <Plug>BufTabLine.Go(7)
+    nmap <leader>8 <Plug>BufTabLine.Go(8)
+    nmap <leader>9 <Plug>BufTabLine.Go(9)
+    nmap <leader>0 <Plug>BufTabLine.Go(10)
+    " color scheme
+    hi BufTabLineCurrent ctermfg=50
+    hi BufTabLineHidden ctermfg=67
+"}
+
+"easyclip {
+    let g:EasyClipUseSubstituteDefaults = 1
 "}
 
 "use j and k choose complete
 inoremap <expr> j pumvisible() ? '<C-n>' : 'j'
 inoremap <expr> k pumvisible() ? '<C-p>' : 'k'
+
+"use <c-n>、<c-p> choose command history
+cnoremap <c-n> <down>
+cnoremap <c-p> <up>
+
+"don't lose selection when shifting sidewards
+xnoremap < <gv
+xnoremap > >gv
+
+"bracketed paste mode (valid in tmux)
+if has('patch-8.0.0238')
+    if &term =~ "screen"
+        let &t_BE = "\e[?2004h"
+        let &t_BD = "\e[?2004l"
+        exec "set t_PS=\e[200~"
+        exec "set t_PE=\e[201~"
+    endif
+else
+    if has('patch-8.0.0210')
+        set t_BE=
+    endif
+
+    if &term =~ "xterm" || &term =~ "screen"
+        function XTermPasteBegin(ret)
+            set paste
+            set pastetoggle=<Esc>[201~
+            return a:ret
+        endfunction
+
+        let &t_ti .= "\e[?2004h"
+        let &t_te .= "\e[?2004l"
+
+        noremap <special> <expr> <Esc>[200~ XTermPasteBegin("0i")
+        inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
+        vnoremap <special> <expr> <Esc>[200~ XTermPasteBegin("c")
+        cnoremap <special> <Esc>[200~ <nop>
+        cnoremap <special> <Esc>[201~ <nop>
+    endif
+endif
+
+"Fix matchparen plugin slow
+let g:matchparen_timeout = 20
+let g:matchparen_insert_timeout = 20
