@@ -2,15 +2,50 @@
 alias web=~/Documents/Website
 alias down=~/Downloads
 
+# git alias
+alias gs="git status"
+alias gc="git commit --verbose"
+alias gp="git push"
+alias gl="git pull"
+alias gb="git branch"
+alias gco="git checkout"
+alias gia="git add ."
+alias gm="git merge"
+alias gd="git diff"
+alias gr="git rebase"
+alias gra="git rebase --abort"
+alias grc="git rebase --continue"
+alias gri="git rebase --interactive"
+alias grs="git rebase --skip"
+alias gsh="git stash"
+
+# emacs alias
+alias es="emacs -nw"
+
+# kubernetes alias
+alias kga="kubectl get all"
+alias kdd="kubectl delete deployments --all"
+alias kds="kubectl delete services --all"
+alias kdst="kubectl delete secrets --all"
+alias kdpv="kubectl delete persistentvolumes --all"
+alias kdpvc="kubectl delete persistentvolumeclaims --all"
+alias kdsc="kubectl delete storageclasses --all"
+alias kdc="kdd && kds && kdst && kdpv && kdpvc && kdsc"
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
-. ~/z.sh
 source <(kubectl completion zsh)
+source ~/z.sh
+
+[[ -s "/Users/walkerho/.gvm/scripts/gvm" ]] && source "/Users/walkerho/.gvm/scripts/gvm"
