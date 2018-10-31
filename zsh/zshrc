@@ -23,14 +23,7 @@ alias gsh="git stash"
 alias es="emacs -nw"
 
 # kubernetes alias
-alias kga="kubectl get all"
-alias kdd="kubectl delete deployments --all"
-alias kds="kubectl delete services --all"
-alias kdst="kubectl delete secrets --all"
-alias kdpv="kubectl delete persistentvolumes --all"
-alias kdpvc="kubectl delete persistentvolumeclaims --all"
-alias kdsc="kubectl delete storageclasses --all"
-alias kdc="kdd && kds && kdst && kdpv && kdpvc && kdsc"
+source ~/Documents/Website/dotfiles/zsh/kube-alias.sh
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
@@ -47,5 +40,12 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 source <(kubectl completion zsh)
 source ~/z.sh
+
+# Change FZF_DEFAULT_COMMAND for finding hidden files
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+
+# Change default editor
+export VISUAL=vim
+export EDITOR="$VISUAL"
 
 [[ -s "/Users/walkerho/.gvm/scripts/gvm" ]] && source "/Users/walkerho/.gvm/scripts/gvm"

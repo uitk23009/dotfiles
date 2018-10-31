@@ -28,6 +28,7 @@ Plug 'ap/vim-buftabline'
 Plug 'svermeulen/vim-easyclip'
 Plug 'scrooloose/nerdtree'
 Plug 'nightsense/stellarized'
+Plug 'fatih/vim-go'
 call plug#end()
 
 
@@ -35,11 +36,11 @@ set rtp+=~/.fzf
 
 set nocompatible
 
-"general settings
+" general settings
 filetype on
 filetype plugin indent on
-
 syntax on
+
 " Encoding
 set encoding=utf-8
 set fileencoding=utf-8
@@ -77,17 +78,21 @@ set number
 set cursorline
 set ruler
 set t_Co=256
+set autochdir
 
-" buffer
+" Buffer
 set nostartofline
 
-" autocomplete
+" Autocomplete
 set completeopt=longest,menu
 
-" performance
+" Performance
 set lazyredraw
 set hidden
 set re=1
+
+" Command complete menu
+set wildmenu
 
 set termguicolors
 if &term =~# '^screen'
@@ -105,7 +110,6 @@ augroup vueSyntax
     autocmd BufEnter * :syntax sync fromstart
 augroup END
 
-
 if exists('$TMUX')
     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
     let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
@@ -114,7 +118,7 @@ else
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
-"dictionary{
+" Dictionary {
     set complete+=k
     set iskeyword+=-
     let dict = '~/.vim/dict/'
@@ -136,40 +140,54 @@ endif
     endif
 "}
 
-"lightline{
+" lightline {
     set laststatus=2
     let g:lightline = {
         \ 'colorscheme': 'wombat',
+        \ 'active': {
+        \ 'left': [ [ 'mode', 'paste' ],
+        \           [ 'readonly', 'absolutepath', 'modified' ] ],
+        \ }
         \ }
 "}
 
-"t-comment{
+" t-comment {
     map <c-/> <c-_>
-    map <c-b> <c-_>b
 "}
 
-"indentLine{
+" indentLine {
     let g:indentLine_concealcursor = 'inc'
     let g:indentLine_conceallevel = 2
 "}
 
-"learder{
+" learder {
     let mapleader=","
     let g:mapleader=","
 "}
 
-"emmet {
-    autocmd FileType vue,html imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+" basic {
+    "fast save
+    nmap <leader>w :w!<CR>
+    ":W sudo save the file
+    command W w !sudo tee % > /dev/null
+"}
+
+" NerdTree {
+    nmap <C-i> :NERDTreeToggle<CR>
+" }
+
+" emmet {
+    autocmd FileType vue,html imap <expr> <C-e> emmet#expandAbbrIntelligent("\<tab>")
     let g:use_emmet_complete_tag = 1
 "}
 
-"ultisnips {
-    let g:UltiSnipsExpandTrigger="<c-p>"
-    let g:UltiSnipsJumpForwardTrigger="<c-k>"
-    let g:UltiSnipsJumpBackwardTrigger="<c-j>"
+" ultisnips {
+    let g:UltiSnipsExpandTrigger="<Tab>"
+    let g:UltiSnipsJumpForwardTrigger="<c-n>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-p>"
 "}
 
-"CamelCaseMotion {
+" CamelCaseMotion {
     map <silent> w <Plug>CamelCaseMotion_w
     map <silent> b <Plug>CamelCaseMotion_b
     map <silent> e <Plug>CamelCaseMotion_e
@@ -186,13 +204,13 @@ endif
     sunmap ge
 "}
 
-"ale {
+" ale {
     let g:ale_fix_on_save = 1
     let g:ale_linters = { 'python': ['flake8'] }
     let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 "}
 
-"fzf {
+" fzf {
     function! s:find_git_root()
         return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
     endfunction
@@ -202,15 +220,27 @@ endif
     nnoremap <c-p> :ProjectFiles<CR>
 "}
 
-"buffer {
+" buffer {
     " navigation
-    nnoremap <Leader>b :bp<CR>
-    nnoremap <Leader>f :bn<CR>
+    nnoremap <leader>b :bp<CR>
+    nnoremap <leader>f :bn<CR>
     " buffer list
-    nnoremap <Leader>l :ls<CR>
+    nnoremap <leader>l :ls<CR>
+    " delete buffer
+    nnoremap <leader>d :bd<CR>
+    " open new buffer
+    nnoremap <leader>v :vsplit<CR>
+    nnoremap <leader>s :split<CR>
+    nnoremap <leader>o <C-w>o
+
+    " resize
+    if bufwinnr(1)
+    map + <C-W>+
+    map - <C-W>-
+    endif
 "}
 
-"buftabline {
+" buftabline {
     let g:buftabline_numbers = 2
     let g:buftabline_indicators = 1
     " mapping
@@ -227,25 +257,33 @@ endif
     " color scheme
     hi BufTabLineCurrent ctermfg=50
     hi BufTabLineHidden ctermfg=67
+    hi BufTabLineActive ctermfg=97
 "}
 
-"easyclip {
+" window {
+    nnoremap <C-h> <C-w>h
+    nnoremap <C-j> <C-w>j
+    nnoremap <C-k> <C-w>k
+    nnoremap <C-l> <C-w>l
+"}
+
+" easyclip {
     let g:EasyClipUseSubstituteDefaults = 1
 "}
 
-"use j and k choose complete
+" use j and k choose complete
 inoremap <expr> j pumvisible() ? '<C-n>' : 'j'
 inoremap <expr> k pumvisible() ? '<C-p>' : 'k'
 
-"use <c-n>、<c-p> choose command history
+" use <c-n>、<c-p> choose command history
 cnoremap <c-n> <down>
 cnoremap <c-p> <up>
 
-"don't lose selection when shifting sidewards
+" don't lose selection when shifting sidewards
 xnoremap < <gv
 xnoremap > >gv
 
-"bracketed paste mode (valid in tmux)
+" bracketed paste mode (valid in tmux)
 if has('patch-8.0.0238')
     if &term =~ "screen"
         let &t_BE = "\e[?2004h"
@@ -276,13 +314,30 @@ else
     endif
 endif
 
-"Fix matchparen plugin slow {
+" Fix matchparen plugin slow {
     let g:matchparen_timeout = 20
     let g:matchparen_insert_timeout = 20
 "}
 
-"NERDTree {
-    map <C-n> :NERDTreeToggle<CR>
+" vim-go {
+    au FileType go nmap <leader>r <Plug>(go-run)
+    let g:go_highlight_functions = 1
+    let g:go_highlight_methods = 1
+    let g:go_highlight_structs = 1
+    let g:go_highlight_operators = 1
+    let g:go_highlight_build_constraints = 1
+    let g:go_fmt_command = "goimports"
 "}
 
+" autochdir {
+    "autochdir for some plugins
+    autocmd BufEnter * silent! lcd %:p:h
+    "command for quick directory change
+    nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
+" }
+
+" use enter to select complete option
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" remap ESC
 inoremap <c-c> <ESC>
