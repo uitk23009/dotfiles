@@ -79,12 +79,13 @@ set cursorline
 set ruler
 set t_Co=256
 set autochdir
+set autoread
 
 " Buffer
 set nostartofline
 
 " Autocomplete
-set completeopt=longest,menu
+set completeopt=longest,menuone
 
 " Performance
 set lazyredraw
@@ -173,7 +174,7 @@ endif
 "}
 
 " NerdTree {
-    nmap <C-i> :NERDTreeToggle<CR>
+    nmap <leader>a :NERDTreeToggle<CR>
 " }
 
 " emmet {
@@ -183,8 +184,8 @@ endif
 
 " ultisnips {
     let g:UltiSnipsExpandTrigger="<Tab>"
-    let g:UltiSnipsJumpForwardTrigger="<c-n>"
-    let g:UltiSnipsJumpBackwardTrigger="<c-p>"
+    let g:UltiSnipsJumpForwardTrigger="<C-n>"
+    let g:UltiSnipsJumpBackwardTrigger="<C-p>"
 "}
 
 " CamelCaseMotion {
@@ -336,8 +337,10 @@ endif
     nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 " }
 
-" use enter to select complete option
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" vim-instant-markdown {
+    let g:instant_markdown_autostart = 0
+    nnoremap <leader>md :InstantMarkdownPreview<CR>
+" }
 
 " remap ESC
 inoremap <c-c> <ESC>
