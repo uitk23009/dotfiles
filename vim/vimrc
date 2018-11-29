@@ -153,7 +153,7 @@ endif
 "}
 
 " t-comment {
-    map <c-/> <c-_>
+    noremap <c-/> <c-_>
 "}
 
 " indentLine {
@@ -167,18 +167,18 @@ endif
 "}
 
 " basic {
-    "fast save
-    nmap <leader>w :w!<CR>
-    ":W sudo save the file
+    " fast save
+    nnoremap <leader>w :w!<CR>
+    " :W sudo save the file
     command W w !sudo tee % > /dev/null
 "}
 
 " NerdTree {
-    nmap <leader>a :NERDTreeToggle<CR>
+    nnoremap <leader>a :NERDTreeToggle<CR>
 " }
 
 " emmet {
-    autocmd FileType vue,html imap <expr> <C-e> emmet#expandAbbrIntelligent("\<tab>")
+    autocmd FileType vue,html imap <expr> <leader>e emmet#expandAbbrIntelligent("\<tab>")
     let g:use_emmet_complete_tag = 1
 "}
 
@@ -189,16 +189,16 @@ endif
 "}
 
 " CamelCaseMotion {
-    map <silent> w <Plug>CamelCaseMotion_w
-    map <silent> b <Plug>CamelCaseMotion_b
-    map <silent> e <Plug>CamelCaseMotion_e
-    map <silent> ge <Plug>CamelCaseMotion_ge
-    omap <silent> iw <Plug>CamelCaseMotion_iw
-    xmap <silent> iw <Plug>CamelCaseMotion_iw
-    omap <silent> ib <Plug>CamelCaseMotion_ib
-    xmap <silent> ib <Plug>CamelCaseMotion_ib
-    omap <silent> ie <Plug>CamelCaseMotion_ie
-    xmap <silent> ie <Plug>CamelCaseMotion_ie
+    noremap <silent> w <Plug>CamelCaseMotion_w
+    noremap <silent> b <Plug>CamelCaseMotion_b
+    noremap <silent> e <Plug>CamelCaseMotion_e
+    noremap <silent> ge <Plug>CamelCaseMotion_ge
+    onoremap <silent> iw <Plug>CamelCaseMotion_iw
+    xnoremap <silent> iw <Plug>CamelCaseMotion_iw
+    onoremap <silent> ib <Plug>CamelCaseMotion_ib
+    xnoremap <silent> ib <Plug>CamelCaseMotion_ib
+    onoremap <silent> ie <Plug>CamelCaseMotion_ie
+    xnoremap <silent> ie <Plug>CamelCaseMotion_ie
     sunmap w
     sunmap b
     sunmap e
@@ -245,16 +245,16 @@ endif
     let g:buftabline_numbers = 2
     let g:buftabline_indicators = 1
     " mapping
-    nmap <leader>1 <Plug>BufTabLine.Go(1)
-    nmap <leader>2 <Plug>BufTabLine.Go(2)
-    nmap <leader>3 <Plug>BufTabLine.Go(3)
-    nmap <leader>4 <Plug>BufTabLine.Go(4)
-    nmap <leader>5 <Plug>BufTabLine.Go(5)
-    nmap <leader>6 <Plug>BufTabLine.Go(6)
-    nmap <leader>7 <Plug>BufTabLine.Go(7)
-    nmap <leader>8 <Plug>BufTabLine.Go(8)
-    nmap <leader>9 <Plug>BufTabLine.Go(9)
-    nmap <leader>0 <Plug>BufTabLine.Go(10)
+    nnoremap <leader>1 <Plug>BufTabLine.Go(1)
+    nnoremap <leader>2 <Plug>BufTabLine.Go(2)
+    nnoremap <leader>3 <Plug>BufTabLine.Go(3)
+    nnoremap <leader>4 <Plug>BufTabLine.Go(4)
+    nnoremap <leader>5 <Plug>BufTabLine.Go(5)
+    nnoremap <leader>6 <Plug>BufTabLine.Go(6)
+    nnoremap <leader>7 <Plug>BufTabLine.Go(7)
+    nnoremap <leader>8 <Plug>BufTabLine.Go(8)
+    nnoremap <leader>9 <Plug>BufTabLine.Go(9)
+    nnoremap <leader>0 <Plug>BufTabLine.Go(10)
     " color scheme
     hi BufTabLineCurrent ctermfg=50
     hi BufTabLineHidden ctermfg=67
@@ -277,8 +277,8 @@ inoremap <expr> j pumvisible() ? '<C-n>' : 'j'
 inoremap <expr> k pumvisible() ? '<C-p>' : 'k'
 
 " use <c-n>、<c-p> choose command history
-cnoremap <c-n> <down>
-cnoremap <c-p> <up>
+cnoremap <C-n> <down>
+cnoremap <C-p> <up>
 
 " don't lose selection when shifting sidewards
 xnoremap < <gv
