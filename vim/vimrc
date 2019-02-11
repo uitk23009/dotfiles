@@ -1,36 +1,56 @@
 call plug#begin('~/.vim/plugged')
+" General
 Plug 'itchyny/lightline.vim'
+Plug 'ap/vim-buftabline'
 Plug 'Yggdroot/indentLine'
-Plug 'editorconfig/editorconfig-vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tomtom/tcomment_vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
-Plug 'mattn/emmet-vim', {'for': ['vue', 'html']}
 Plug 'tpope/vim-surround'
-Plug 'gregsexton/matchtag'
 Plug 'tpope/vim-repeat'
-Plug 'ap/vim-css-color'
-Plug 'airblade/vim-gitgutter'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'bkad/CamelCaseMotion'
 Plug 'junegunn/vim-slash'
-Plug 'cakebaker/scss-syntax.vim', {'for': ['vue', 'scss']}
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tpope/vim-unimpaired'
-Plug 'posva/vim-vue', {'for': 'vue'}
-Plug 'w0rp/ale'
-Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
-Plug 'ap/vim-buftabline'
 Plug 'svermeulen/vim-easyclip'
 Plug 'scrooloose/nerdtree'
+
+" Linter
+Plug 'w0rp/ale'
+Plug 'editorconfig/editorconfig-vim'
+
+" Theme
 Plug 'nightsense/stellarized'
+
+" Go
 Plug 'fatih/vim-go'
+
+" Markdown
+Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+
+" Git
+Plug 'airblade/vim-gitgutter'
+
+" HTML
+Plug 'mattn/emmet-vim', {'for': ['vue', 'html']}
+Plug 'gregsexton/matchtag'
+
+" CSS
+Plug 'cakebaker/scss-syntax.vim', {'for': ['vue', 'scss']}
+Plug 'ap/vim-css-color'
+
+" Javascript
+Plug 'posva/vim-vue', {'for': 'vue'}
+Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 call plug#end()
 
+" Perl
+Plug 'vim-perl/vim-perl', {'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny'}
 
 set rtp+=~/.fzf
 
@@ -122,23 +142,28 @@ endif
 " Dictionary {
     set complete+=k
     set iskeyword+=-
-    let dict = '~/.vim/dict/'
-    let extension = expand('%:e')
-    let type = expand('%:r:e')
-    if extension == "vue"
-        exe 'set dictionary+='.dict.'css.dic'
-        exe 'set dictionary+='.dict.'html.dic'
-        exe 'set dictionary+='.dict.'js.dic'
-    else
-        if type == "spec"
-            exe 'set dictionary+='.dict.'vue-test-utils.dic'
-            exe 'set dictionary+='.dict.'jest.dic'
+    autocmd FileType * call s:setDict()
+    function s:setDict()
+        let dict = '~/.vim/dict/'
+        let type = expand('%:r:e')
+        let current_filetype = &filetype
+        if current_filetype == "vue"
+            exe 'set dictionary+='.dict.'css.txt' |
+            exe 'set dictionary+='.dict.'html.txt' |
+            exe 'set dictionary+='.dict.'javascript.txt'
+        else
+            if current_filetype == "javascript" && type == "spec"
+                exe 'set dictionary+='.dict.'vue-test-utils.txt' |
+                exe 'set dictionary+='.dict.'jest.txt'
+                exe 'set dictionary+='.dict.'javascript.txt'
+            else
+                let filepath = dict.current_filetype.'.txt'
+                if !empty(glob(filepath))
+                    exe 'set dictionary+='.dict.current_filetype.'.txt'
+                endif
+            endif
         endif
-        let filepath = dict.extension.'.dic'
-        if !empty(glob(filepath))
-            exe 'set dictionary+='.dict.extension.'.dic'
-        endif
-    endif
+    endfunction
 "}
 
 " lightline {
@@ -178,7 +203,7 @@ endif
 " }
 
 " emmet {
-    autocmd FileType vue,html imap <expr> <leader>e emmet#expandAbbrIntelligent("\<tab>")
+    autocmd FileType vue,html,js imap <expr> <C-e> emmet#expandAbbrIntelligent("\<tab>")
     let g:use_emmet_complete_tag = 1
 "}
 
