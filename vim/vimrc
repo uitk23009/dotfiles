@@ -121,7 +121,8 @@ if &term =~# '^screen'
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 
-colorscheme stellarized
+" add silent! to prevent show error message when colorscheme is not yet installed.
+silent! colorscheme stellarized
 
 packadd! matchit
 
