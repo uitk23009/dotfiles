@@ -49,9 +49,6 @@ Plug 'posva/vim-vue', {'for': 'vue'}
 Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 call plug#end()
 
-" Perl
-Plug 'vim-perl/vim-perl', {'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny'}
-
 set rtp+=~/.fzf
 
 set nocompatible
@@ -66,7 +63,6 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
 set bomb
-set binary
 set ttyfast
 
 " Fix backspace indent
