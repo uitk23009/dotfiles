@@ -18,7 +18,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 " Theme
-Plug 'dracula/vim'
+Plug 'nightsense/cosmic_latte'
 
 call plug#end()
 
@@ -84,7 +84,7 @@ set re=1
 set wildmenu
 
 set background=dark
-color dracula
+color cosmic_latte
 
 packadd! matchit
 
