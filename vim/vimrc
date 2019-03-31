@@ -27,9 +27,6 @@ Plug 'editorconfig/editorconfig-vim'
 " Theme
 Plug 'nightsense/stellarized'
 
-" Go
-Plug 'fatih/vim-go'
-
 " Markdown
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 
@@ -62,7 +59,6 @@ syntax on
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
-set bomb
 set ttyfast
 
 " Fix backspace indent
@@ -340,16 +336,6 @@ endif
 " Fix matchparen plugin slow {
     let g:matchparen_timeout = 20
     let g:matchparen_insert_timeout = 20
-"}
-
-" vim-go {
-    au FileType go nmap <leader>r <Plug>(go-run)
-    let g:go_highlight_functions = 1
-    let g:go_highlight_methods = 1
-    let g:go_highlight_structs = 1
-    let g:go_highlight_operators = 1
-    let g:go_highlight_build_constraints = 1
-    let g:go_fmt_command = "goimports"
 "}
 
 " autochdir {
