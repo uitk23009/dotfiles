@@ -16,3 +16,4 @@ alias p4b='p4 describe'
 
 bind 'set show-all-if-ambiguous on'
 bind 'TAB:menu-complete'
+stty -ixon

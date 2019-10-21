@@ -262,10 +262,12 @@ endif
     command! PR !p4r %
 "}
 
+" sql.vim {
+    " Disabled sql.vim mapping
+    let g:omni_sql_no_default_maps = 1
+" }
+
 " remap ESC
 inoremap <c-c> <ESC>
-
-" abbreviations
-iabb pe print STDERR
 
 let $BASH_ENV = "~/.bashrc"
