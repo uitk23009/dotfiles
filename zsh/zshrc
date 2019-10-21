@@ -1,6 +1,10 @@
 # ~/.zshrc
-alias web=~/Documents/Website
-alias down=~/Downloads
+alias web="~/Documents/Website"
+alias down="~/Downloads"
+alias cloud="~/iCloud"
+alias ma="~/iCloud/MediaAlpha/Notes"
+alias dev="ssh walker"
+alias ez="exec zsh -l"
 
 # git alias
 alias gs="git status"

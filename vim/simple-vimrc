@@ -1,5 +1,4 @@
 call plug#begin('~/.vim/plugged')
-" General
 Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-buftabline'
 Plug 'Yggdroot/indentLine'
@@ -10,40 +9,17 @@ Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'tomtom/tlib_vim'
-Plug 'bkad/CamelCaseMotion'
 Plug 'junegunn/vim-slash'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tpope/vim-unimpaired'
 Plug 'svermeulen/vim-easyclip'
-Plug 'scrooloose/nerdtree'
-
-" Linter
-Plug 'w0rp/ale'
-Plug 'editorconfig/editorconfig-vim'
+Plug 'bkad/CamelCaseMotion'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 " Theme
-Plug 'nightsense/stellarized'
+Plug 'nightsense/cosmic_latte'
 
-" Markdown
-Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
-
-" Git
-Plug 'airblade/vim-gitgutter'
-
-" HTML
-Plug 'mattn/emmet-vim', {'for': ['vue', 'html']}
-Plug 'gregsexton/matchtag'
-
-" CSS
-Plug 'cakebaker/scss-syntax.vim', {'for': ['vue', 'scss']}
-Plug 'ap/vim-css-color'
-
-" Javascript
-Plug 'posva/vim-vue', {'for': 'vue'}
-Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 call plug#end()
 
 set rtp+=~/.fzf
@@ -51,7 +27,6 @@ set rtp+=~/.fzf
 set nocompatible
 
 " general settings
-filetype on
 filetype plugin indent on
 syntax on
 
@@ -97,6 +72,7 @@ set autoread
 set nostartofline
 
 " Autocomplete
+set complete-=i
 set completeopt=longest,menuone
 
 " Performance
@@ -107,57 +83,12 @@ set re=1
 " Command complete menu
 set wildmenu
 
-set termguicolors
-if &term =~# '^screen'
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-endif
-
-" add silent! to prevent show error message when colorscheme is not yet installed.
-silent! colorscheme stellarized
+set background=dark
+color cosmic_latte
 
 packadd! matchit
 
-augroup vueSyntax
-    autocmd!
-    " autocmd BufRead,BufNewFile *.vue set filetype=vue
-    autocmd BufEnter * :syntax sync fromstart
-augroup END
-
-if exists('$TMUX')
-    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-else
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-endif
-
-" Dictionary {
-    set complete+=k
-    set iskeyword+=-
-    autocmd FileType * call s:setDict()
-    function s:setDict()
-        let dict = '~/.vim/dict/'
-        let type = expand('%:r:e')
-        let current_filetype = &filetype
-        if current_filetype == "vue"
-            exe 'set dictionary+='.dict.'css.txt' |
-            exe 'set dictionary+='.dict.'html.txt' |
-            exe 'set dictionary+='.dict.'javascript.txt'
-        else
-            if current_filetype == "javascript" && type == "spec"
-                exe 'set dictionary+='.dict.'vue-test-utils.txt' |
-                exe 'set dictionary+='.dict.'jest.txt'
-                exe 'set dictionary+='.dict.'javascript.txt'
-            else
-                let filepath = dict.current_filetype.'.txt'
-                if !empty(glob(filepath))
-                    exe 'set dictionary+='.dict.current_filetype.'.txt'
-                endif
-            endif
-        endif
-    endfunction
-"}
+autocmd BufEnter * :syntax sync fromstart
 
 " lightline {
     set laststatus=2
@@ -187,17 +118,7 @@ endif
 " basic {
     " :W sudo save the file
     command! W w !sudo tee % > /dev/null
-    " close all open files
     command! Q qall
-"}
-
-" NerdTree {
-    nnoremap <leader>a :NERDTreeToggle<CR>
-" }
-
-" emmet {
-    autocmd FileType vue,html,js imap <expr> <C-e> emmet#expandAbbrIntelligent("\<tab>")
-    let g:use_emmet_complete_tag = 1
 "}
 
 " ultisnips {
@@ -206,38 +127,11 @@ endif
     let g:UltiSnipsJumpBackwardTrigger="<C-p>"
 "}
 
-" CamelCaseMotion {
-    map <silent> w <Plug>CamelCaseMotion_w
-    map <silent> b <Plug>CamelCaseMotion_b
-    map <silent> e <Plug>CamelCaseMotion_e
-    map <silent> ge <Plug>CamelCaseMotion_ge
-    omap <silent> iw <Plug>CamelCaseMotion_iw
-    xmap <silent> iw <Plug>CamelCaseMotion_iw
-    omap <silent> ib <Plug>CamelCaseMotion_ib
-    xmap <silent> ib <Plug>CamelCaseMotion_ib
-    omap <silent> ie <Plug>CamelCaseMotion_ie
-    xmap <silent> ie <Plug>CamelCaseMotion_ie
-    sunmap w
-    sunmap b
-    sunmap e
-    sunmap ge
-"}
-
-" ale {
-    let g:ale_fix_on_save = 1
-    let g:ale_linters = { 'python': ['flake8'] }
-    let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-"}
-
 " fzf {
-    function! s:find_git_root()
-        return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
-    endfunction
-
-    command! ProjectFiles execute 'Files' s:find_git_root()
-
-    nnoremap <c-p> :ProjectFiles<CR>
+    nnoremap <c-p> :FZF -i /ma<CR>
+    command! F FZF -i
 "}
+
 
 " buffer {
     " navigation
@@ -278,6 +172,7 @@ endif
     hi BufTabLineHidden ctermfg=67
     hi BufTabLineActive ctermfg=97
 "}
+
 
 " window {
     nnoremap <C-h> <C-w>h
@@ -345,10 +240,32 @@ endif
     nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 " }
 
-" vim-instant-markdown {
-    let g:instant_markdown_autostart = 0
-    nnoremap <leader>md :InstantMarkdownPreview<CR>
-" }
+" CamelCaseMotion {
+    map <silent> w <Plug>CamelCaseMotion_w
+    map <silent> b <Plug>CamelCaseMotion_b
+    map <silent> e <Plug>CamelCaseMotion_e
+    map <silent> ge <Plug>CamelCaseMotion_ge
+    omap <silent> iw <Plug>CamelCaseMotion_iw
+    xmap <silent> iw <Plug>CamelCaseMotion_iw
+    omap <silent> ib <Plug>CamelCaseMotion_ib
+    xmap <silent> ib <Plug>CamelCaseMotion_ib
+    omap <silent> ie <Plug>CamelCaseMotion_ie
+    xmap <silent> ie <Plug>CamelCaseMotion_ie
+    sunmap w
+    sunmap b
+    sunmap e
+    sunmap ge
+"}
+
+" perforce {
+    command! PE !p4e %
+    command! PR !p4r %
+"}
 
 " remap ESC
 inoremap <c-c> <ESC>
+
+" abbreviations
+iabb pe print STDERR
+
+let $BASH_ENV = "~/.bashrc"

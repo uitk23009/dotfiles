@@ -1,5 +1,32 @@
+#!/bin/sh
+
+yum -y install git tmux
+
+# set tmux config
+
+cat > ~/.tmux.conf << EOL
+set -g base-index 1
+set-option -g base-index 1
+set-window-option -g pane-base-index 1
+setw -g mode-keys vi
+set -g status-right '#{prefix_highlight} | %a %Y-%m-%d %H:%M'
+set -g prefix C-a
+unbind C-b
+
+bind '"' split-window -c "#{pane_current_path}"
+bind % split-window -h -c "#{pane_current_path}"
+bind c new-window -c "#{pane_current_path}"
+EOL
+
+# install vim-plug
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# set vimrc
+
+cat > ~/.vimrc << EOL
 call plug#begin('~/.vim/plugged')
-" General
+
 Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-buftabline'
 Plug 'Yggdroot/indentLine'
@@ -10,40 +37,10 @@ Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'tomtom/tlib_vim'
-Plug 'bkad/CamelCaseMotion'
 Plug 'junegunn/vim-slash'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tpope/vim-unimpaired'
 Plug 'svermeulen/vim-easyclip'
-Plug 'scrooloose/nerdtree'
-
-" Linter
-Plug 'w0rp/ale'
-Plug 'editorconfig/editorconfig-vim'
-
-" Theme
-Plug 'nightsense/stellarized'
-
-" Markdown
-Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
-
-" Git
-Plug 'airblade/vim-gitgutter'
-
-" HTML
-Plug 'mattn/emmet-vim', {'for': ['vue', 'html']}
-Plug 'gregsexton/matchtag'
-
-" CSS
-Plug 'cakebaker/scss-syntax.vim', {'for': ['vue', 'scss']}
-Plug 'ap/vim-css-color'
-
-" Javascript
-Plug 'posva/vim-vue', {'for': 'vue'}
-Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 call plug#end()
 
 set rtp+=~/.fzf
@@ -51,7 +48,6 @@ set rtp+=~/.fzf
 set nocompatible
 
 " general settings
-filetype on
 filetype plugin indent on
 syntax on
 
@@ -59,6 +55,7 @@ syntax on
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
+set bomb
 set ttyfast
 
 " Fix backspace indent
@@ -107,57 +104,11 @@ set re=1
 " Command complete menu
 set wildmenu
 
-set termguicolors
-if &term =~# '^screen'
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-endif
-
-" add silent! to prevent show error message when colorscheme is not yet installed.
-silent! colorscheme stellarized
-
 packadd! matchit
 
-augroup vueSyntax
-    autocmd!
-    " autocmd BufRead,BufNewFile *.vue set filetype=vue
-    autocmd BufEnter * :syntax sync fromstart
-augroup END
-
-if exists('$TMUX')
-    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-else
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-endif
-
-" Dictionary {
-    set complete+=k
-    set iskeyword+=-
-    autocmd FileType * call s:setDict()
-    function s:setDict()
-        let dict = '~/.vim/dict/'
-        let type = expand('%:r:e')
-        let current_filetype = &filetype
-        if current_filetype == "vue"
-            exe 'set dictionary+='.dict.'css.txt' |
-            exe 'set dictionary+='.dict.'html.txt' |
-            exe 'set dictionary+='.dict.'javascript.txt'
-        else
-            if current_filetype == "javascript" && type == "spec"
-                exe 'set dictionary+='.dict.'vue-test-utils.txt' |
-                exe 'set dictionary+='.dict.'jest.txt'
-                exe 'set dictionary+='.dict.'javascript.txt'
-            else
-                let filepath = dict.current_filetype.'.txt'
-                if !empty(glob(filepath))
-                    exe 'set dictionary+='.dict.current_filetype.'.txt'
-                endif
-            endif
-        endif
-    endfunction
-"}
+" no show waning message
+autocmd FileChangedRO * echohl WarningMsg | echo "File changed RO." | echohl None
+autocmd FileChangedShell * echohl WarningMsg | echo "File changed shell." | echohl None
 
 " lightline {
     set laststatus=2
@@ -185,59 +136,16 @@ endif
 "}
 
 " basic {
+    " fast save
+    nnoremap <leader>w :w!<CR>
     " :W sudo save the file
     command! W w !sudo tee % > /dev/null
-    " close all open files
-    command! Q qall
-"}
-
-" NerdTree {
-    nnoremap <leader>a :NERDTreeToggle<CR>
-" }
-
-" emmet {
-    autocmd FileType vue,html,js imap <expr> <C-e> emmet#expandAbbrIntelligent("\<tab>")
-    let g:use_emmet_complete_tag = 1
-"}
-
-" ultisnips {
-    let g:UltiSnipsExpandTrigger="<Tab>"
-    let g:UltiSnipsJumpForwardTrigger="<C-n>"
-    let g:UltiSnipsJumpBackwardTrigger="<C-p>"
-"}
-
-" CamelCaseMotion {
-    map <silent> w <Plug>CamelCaseMotion_w
-    map <silent> b <Plug>CamelCaseMotion_b
-    map <silent> e <Plug>CamelCaseMotion_e
-    map <silent> ge <Plug>CamelCaseMotion_ge
-    omap <silent> iw <Plug>CamelCaseMotion_iw
-    xmap <silent> iw <Plug>CamelCaseMotion_iw
-    omap <silent> ib <Plug>CamelCaseMotion_ib
-    xmap <silent> ib <Plug>CamelCaseMotion_ib
-    omap <silent> ie <Plug>CamelCaseMotion_ie
-    xmap <silent> ie <Plug>CamelCaseMotion_ie
-    sunmap w
-    sunmap b
-    sunmap e
-    sunmap ge
-"}
-
-" ale {
-    let g:ale_fix_on_save = 1
-    let g:ale_linters = { 'python': ['flake8'] }
-    let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 "}
 
 " fzf {
-    function! s:find_git_root()
-        return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
-    endfunction
-
-    command! ProjectFiles execute 'Files' s:find_git_root()
-
-    nnoremap <c-p> :ProjectFiles<CR>
+    nnoremap <c-p> :Files /ma<CR>
 "}
+
 
 " buffer {
     " navigation
@@ -278,6 +186,7 @@ endif
     hi BufTabLineHidden ctermfg=67
     hi BufTabLineActive ctermfg=97
 "}
+
 
 " window {
     nnoremap <C-h> <C-w>h
@@ -345,10 +254,8 @@ endif
     nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 " }
 
-" vim-instant-markdown {
-    let g:instant_markdown_autostart = 0
-    nnoremap <leader>md :InstantMarkdownPreview<CR>
-" }
-
 " remap ESC
 inoremap <c-c> <ESC>
+EOL
+
+vim +PlugInstall +qall

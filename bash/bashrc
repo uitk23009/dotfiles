@@ -1,0 +1,18 @@
+# .bashrc
+# emacs key-binding
+set -o emacs
+# expand alias => for vim
+shopt -s expand_aliases
+
+# p4 alias
+alias p4e='p4 edit'
+alias p4a='p4 add'
+alias p4r='p4 revert'
+alias p4s='p4 status'
+alias p4sc='p4 sync'
+alias p4st='p4 submit'
+alias p4c='p4 changes -m 5'
+alias p4b='p4 describe'
+
+bind 'set show-all-if-ambiguous on'
+bind 'TAB:menu-complete'
