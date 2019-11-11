@@ -21,7 +21,6 @@ Plug 'svermeulen/vim-easyclip'
 Plug 'scrooloose/nerdtree'
 
 " Linter
-Plug 'w0rp/ale'
 Plug 'editorconfig/editorconfig-vim'
 
 " Theme
@@ -132,11 +131,12 @@ else
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
+
 " Dictionary {
     set complete+=k
     set iskeyword+=-
     autocmd FileType * call s:setDict()
-    function s:setDict()
+    function! s:setDict()
         let dict = '~/.vim/dict/'
         let type = expand('%:r:e')
         let current_filetype = &filetype
@@ -223,12 +223,6 @@ endif
     sunmap ge
 "}
 
-" ale {
-    let g:ale_fix_on_save = 1
-    let g:ale_linters = { 'python': ['flake8'] }
-    let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-"}
-
 " fzf {
     function! s:find_git_root()
         return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
@@ -247,6 +241,7 @@ endif
     nmap <leader>l :ls<CR>
     " delete buffer
     nmap <leader>d :bd<CR>
+    nmap <leader>da :bufdo bd<CR>
     " open new buffer
     nmap <leader>v :vsplit<CR>
     nmap <leader>s :split<CR>
@@ -340,7 +335,8 @@ endif
 
 " autochdir {
     "autochdir for some plugins
-    autocmd BufEnter * silent! lcd %:p:h
+    "This command makes fzf open multiple files can't work as expected.
+    " autocmd BufEnter * silent! lcd %:p:h
     "command for quick directory change
     nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 " }

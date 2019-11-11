@@ -235,7 +235,7 @@ endif
 
 " autochdir {
     "autochdir for some plugins
-    autocmd BufEnter * silent! lcd %:p:h
+    " autocmd BufEnter * silent! lcd %:p:h
     "command for quick directory change
     nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 " }
