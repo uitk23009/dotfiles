@@ -19,6 +19,7 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tpope/vim-unimpaired'
 Plug 'svermeulen/vim-easyclip'
 Plug 'scrooloose/nerdtree'
+Plug 'vimwiki/vimwiki'
 
 " Linter
 Plug 'editorconfig/editorconfig-vim'
@@ -26,22 +27,18 @@ Plug 'editorconfig/editorconfig-vim'
 " Theme
 Plug 'nightsense/stellarized'
 
-" Markdown
-Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
-
 " Git
 Plug 'airblade/vim-gitgutter'
 
 " HTML
-Plug 'mattn/emmet-vim', {'for': ['vue', 'html']}
+Plug 'mattn/emmet-vim', {'for': ['html']}
 Plug 'gregsexton/matchtag'
 
 " CSS
-Plug 'cakebaker/scss-syntax.vim', {'for': ['vue', 'scss']}
+Plug 'cakebaker/scss-syntax.vim', {'for': ['scss']}
 Plug 'ap/vim-css-color'
 
 " Javascript
-Plug 'posva/vim-vue', {'for': 'vue'}
 Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 call plug#end()
 
@@ -241,7 +238,7 @@ endif
     nmap <leader>l :ls<CR>
     " delete buffer
     nmap <leader>d :bd<CR>
-    nmap <leader>da :bufdo bd<CR>
+    nmap <leader>g :bufdo bd<CR>
     " open new buffer
     nmap <leader>v :vsplit<CR>
     nmap <leader>s :split<CR>
@@ -341,14 +338,14 @@ endif
     nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 " }
 
-" vim-instant-markdown {
-    let g:instant_markdown_autostart = 0
-    nnoremap <leader>md :InstantMarkdownPreview<CR>
-" }
-
 " sql.vim {
     " Disabled sql.vim mapping
     let g:omni_sql_no_default_maps = 1
+" }
+
+" vimwiki.vim {
+    let g:vimwiki_list = [{'path': '~/iCloud/Wiki',
+                            \ 'syntax': 'markdown', 'ext': '.md'}]
 " }
 
 " remap ESC

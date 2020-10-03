@@ -4,31 +4,30 @@ Plug 'ap/vim-buftabline'
 Plug 'Yggdroot/indentLine'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tomtom/tcomment_vim'
-Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
-Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'junegunn/vim-slash'
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tpope/vim-unimpaired'
 Plug 'svermeulen/vim-easyclip'
 Plug 'bkad/CamelCaseMotion'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-
-" Theme
-Plug 'nightsense/cosmic_latte'
-
+Plug 'jeffkreeftmeijer/vim-dim'
+Plug 'tpope/vim-surround'
+Plug 'junegunn/vim-easy-align'
+Plug 'zivyangll/git-blame.vim'
 call plug#end()
 
 set rtp+=~/.fzf
+
+source ~/.vim/plugged/osc52.vim
 
 set nocompatible
 
 " general settings
 filetype plugin indent on
 syntax on
+
+" Path
+set path=.,**
 
 " Encoding
 set encoding=utf-8
@@ -61,7 +60,7 @@ set noswapfile
 
 set showcmd
 set clipboard=unnamed
-set number
+set number relativenumber
 set cursorline
 set ruler
 set t_Co=256
@@ -84,11 +83,14 @@ set re=1
 set wildmenu
 
 set background=dark
-color cosmic_latte
+color dim
 
 packadd! matchit
 
-autocmd BufEnter * :syntax sync fromstart
+command! S syntax sync fromstart
+
+" Default
+let $RTP=split(&runtimepath, ',')[0]
 
 " lightline {
     set laststatus=2
@@ -119,12 +121,7 @@ autocmd BufEnter * :syntax sync fromstart
     " :W sudo save the file
     command! W w !sudo tee % > /dev/null
     command! Q qall
-"}
-
-" ultisnips {
-    let g:UltiSnipsExpandTrigger="<Tab>"
-    let g:UltiSnipsJumpForwardTrigger="<C-n>"
-    let g:UltiSnipsJumpBackwardTrigger="<C-p>"
+    nmap <leader>cc :1, $d<CR>
 "}
 
 " fzf {
@@ -141,6 +138,7 @@ autocmd BufEnter * :syntax sync fromstart
     nmap <leader>l :ls<CR>
     " delete buffer
     nmap <leader>d :bd<CR>
+    nmap <leader>g :bufdo bd<CR>
     " open new buffer
     nmap <leader>v :vsplit<CR>
     nmap <leader>s :split<CR>
@@ -183,6 +181,7 @@ autocmd BufEnter * :syntax sync fromstart
 
 " easyclip {
     let g:EasyClipUseSubstituteDefaults = 1
+    nnoremap gm m
 "}
 
 " use j and k choose complete
@@ -233,6 +232,10 @@ endif
     let g:matchparen_insert_timeout = 20
 "}
 
+" auto-pair {
+    let g:AutoPairsWildClosedPair = ''
+" }
+
 " autochdir {
     "autochdir for some plugins
     " autocmd BufEnter * silent! lcd %:p:h
@@ -241,20 +244,20 @@ endif
 " }
 
 " CamelCaseMotion {
-    map <silent> w <Plug>CamelCaseMotion_w
-    map <silent> b <Plug>CamelCaseMotion_b
-    map <silent> e <Plug>CamelCaseMotion_e
-    map <silent> ge <Plug>CamelCaseMotion_ge
-    omap <silent> iw <Plug>CamelCaseMotion_iw
-    xmap <silent> iw <Plug>CamelCaseMotion_iw
-    omap <silent> ib <Plug>CamelCaseMotion_ib
-    xmap <silent> ib <Plug>CamelCaseMotion_ib
-    omap <silent> ie <Plug>CamelCaseMotion_ie
-    xmap <silent> ie <Plug>CamelCaseMotion_ie
-    sunmap w
-    sunmap b
-    sunmap e
-    sunmap ge
+   map <silent> w <Plug>CamelCaseMotion_w
+   map <silent> b <Plug>CamelCaseMotion_b
+   map <silent> e <Plug>CamelCaseMotion_e
+   map <silent> ge <Plug>CamelCaseMotion_ge
+   omap <silent> iw <Plug>CamelCaseMotion_iw
+   xmap <silent> iw <Plug>CamelCaseMotion_iw
+   omap <silent> ib <Plug>CamelCaseMotion_ib
+   xmap <silent> ib <Plug>CamelCaseMotion_ib
+   omap <silent> ie <Plug>CamelCaseMotion_ie
+   xmap <silent> ie <Plug>CamelCaseMotion_ie
+   sunmap w
+   sunmap b
+   sunmap e
+   sunmap ge
 "}
 
 " perforce {
@@ -267,7 +270,29 @@ endif
     let g:omni_sql_no_default_maps = 1
 " }
 
+" {
+    highlight TabLineFill ctermfg=0 ctermbg=0
+" }
+
 " remap ESC
 inoremap <c-c> <ESC>
 
+" abbreviations
+iabb wd warn dump_pretty
+iabb pd print dump_pretty
+iabb idp info dump_pretty
+
+" EasyAlign
+nmap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
+
+" Whitespaces
+autocmd BufWinEnter <buffer> match Error /\s\+$/
+autocmd InsertEnter <buffer> match Error /\s\+\%#\@<!$/
+autocmd InsertLeave <buffer> match Error /\s\+$/
+autocmd BufWinLeave <buffer> call clearmatches()
+
 let $BASH_ENV = "~/.bashrc"
+
+xmap <leader>y y:call SendViaOSC52(getreg('"'))<CR>
+nnoremap <Leader>bl :<C-u>call gitblame#echo()<CR>
