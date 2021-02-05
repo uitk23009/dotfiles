@@ -344,7 +344,7 @@ endif
 " }
 
 " vimwiki.vim {
-    let g:vimwiki_list = [{'path': '~/iCloud/Wiki',
+    let g:vimwiki_list = [{'path': '~/Dropbox/Wiki',
                             \ 'syntax': 'markdown', 'ext': '.md'}]
 " }
 

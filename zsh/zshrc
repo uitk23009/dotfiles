@@ -4,6 +4,7 @@ alias down="~/Downloads"
 alias cloud="~/iCloud"
 alias dev="ssh walker"
 alias ez="exec zsh -l"
+alias box="~/Dropbox"
 
 # git alias
 alias gs="git status"
