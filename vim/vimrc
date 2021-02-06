@@ -5,7 +5,6 @@ Plug 'ap/vim-buftabline'
 Plug 'Yggdroot/indentLine'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tomtom/tcomment_vim'
-Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
@@ -13,12 +12,9 @@ Plug 'tpope/vim-repeat'
 Plug 'tomtom/tlib_vim'
 Plug 'bkad/CamelCaseMotion'
 Plug 'junegunn/vim-slash'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tpope/vim-unimpaired'
 Plug 'svermeulen/vim-easyclip'
-Plug 'scrooloose/nerdtree'
 Plug 'vimwiki/vimwiki'
 
 " Linter
@@ -26,20 +22,6 @@ Plug 'editorconfig/editorconfig-vim'
 
 " Theme
 Plug 'nightsense/stellarized'
-
-" Git
-Plug 'airblade/vim-gitgutter'
-
-" HTML
-Plug 'mattn/emmet-vim', {'for': ['html']}
-Plug 'gregsexton/matchtag'
-
-" CSS
-Plug 'cakebaker/scss-syntax.vim', {'for': ['scss']}
-Plug 'ap/vim-css-color'
-
-" Javascript
-Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 call plug#end()
 
 set rtp+=~/.fzf
@@ -186,21 +168,6 @@ endif
     command! W w !sudo tee % > /dev/null
     " close all open files
     command! Q qall
-"}
-
-" NerdTree {
-    nnoremap <leader>a :NERDTreeToggle<CR>
-" }
-
-" emmet {
-    autocmd FileType vue,html,js imap <expr> <C-e> emmet#expandAbbrIntelligent("\<tab>")
-    let g:use_emmet_complete_tag = 1
-"}
-
-" ultisnips {
-    let g:UltiSnipsExpandTrigger="<Tab>"
-    let g:UltiSnipsJumpForwardTrigger="<C-n>"
-    let g:UltiSnipsJumpBackwardTrigger="<C-p>"
 "}
 
 " CamelCaseMotion {

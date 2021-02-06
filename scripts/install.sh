@@ -4,14 +4,10 @@ set -xv
 set -e
 
 # install custom folder
-mkdir -p ~/Documents/Website
-
-# install xcode command tool
-# xcode-select --install
+mkdir -p ~/Walker
 
 # check
 # xcode-select -p
-
 
 if ! command -v brew >/dev/null; then
     echo "Install Homebrew"
@@ -40,12 +36,11 @@ brew install "yarn"
 brew install "coreutils"
 
 # mac tools
-# brew cask install google-chrome firefox
-#brew cask install alfred
-#brew cask install iterm2
-#brew cask install appcleaner
-#brew cask install sizeup
-#brew cask install karabiner-elements
+brew cask install google-chrome firefox
+brew cask install iterm2
+brew cask install appcleaner
+brew cask install sizeup
+brew cask install karabiner-elements
 
 brew cleanup
 
@@ -53,7 +48,7 @@ brew cleanup
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 
 # install dotfiles
-git clone git@github.com:uitk23009/dotfiles.git ~/Documents/Website/dotfiles
+git clone git@github.com:uitk23009/dotfiles.git ~/Walker/dotfiles
 
 # install z.sh
 wget https://raw.githubusercontent.com/rupa/z/master/z.sh -O ~/z.sh
@@ -66,7 +61,8 @@ source vim_setting.sh
 
 # configure tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-ln -s ~/Documents/Website/dotfiles/tmux/tmux.conf ~/.tmux.conf
+rm ~/.tmux.conf
+ln -s ~/Walker/dotfiles/tmux/tmux.conf ~/.tmux.conf
 # install tmux plugins
 tmux start-server
 tmux new-session -d
@@ -74,10 +70,13 @@ source ~/.tmux/plugins/tpm/scripts/install_plugins.sh
 tmux kill-server
 
 # configure tig
-ln -s ~/Documents/Website/dotfiles/tigrc ~/.tigrc
+rm ~/.tigrc
+ln -s ~/Walker/dotfiles/tigrc ~/.tigrc
 
 # configure editorconfig
-ln -s ~/Documents/Website/dotfiles/editorconfig ~/.editorconfig
+rm ~/.editorconfig
+ln -s ~/Walker/dotfiles/editorconfig ~/.editorconfig
 
 # configure gitconfig
-ln -s ~/Documents/Website/dotfiles/gitconfig ~/.gitconfig
+rm ~/.gitconfig
+ln -s ~/Walker/dotfiles/itconfig ~/.gitconfig

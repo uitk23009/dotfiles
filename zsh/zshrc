@@ -1,7 +1,5 @@
 # ~/.zshrc
-alias web="~/Documents/Website"
 alias down="~/Downloads"
-alias cloud="~/iCloud"
 alias dev="ssh walker"
 alias ez="exec zsh -l"
 alias box="~/Dropbox"
@@ -22,9 +20,6 @@ alias grc="git rebase --continue"
 alias gri="git rebase --interactive"
 alias grs="git rebase --skip"
 alias gsh="git stash"
-
-# kubernetes alias
-source ~/Documents/Website/dotfiles/zsh/kube-alias.sh
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
@@ -47,5 +42,3 @@ export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 # Change default editor
 export VISUAL=vim
 export EDITOR="$VISUAL"
-
-[[ -s "/Users/walkerho/.gvm/scripts/gvm" ]] && source "/Users/walkerho/.gvm/scripts/gvm"
