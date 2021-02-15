@@ -7,12 +7,9 @@
   branch = auto
   ui = true
 [alias]
-  history = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
-  files = "!f() { git diff --name-status $1^ $1; }; f"
-  type = cat-file -t
-  dump = cat-file -p
-  fetch = fetch --tags
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[push]
+  default = matching
 [diff]
   tool = icdiff
 [core]
@@ -21,10 +18,12 @@
   quotepath = false
   filemode = true
   ignorecase = false
-[branch]
-  autosetuprebase = always
-[branch "master"]
-  mergeoptions = --no-ff
+[fetch]
+  prune = true
+[remote "origin"]
+  fetch = +refs/tags/*:refs/tags/*
+  prune = true
+  pruneTags = true
 [pager]
   diff = diff-so-fancy | less --tabs=4 -RFX
   show = diff-so-fancy | less --tabs=4 -RFX

@@ -4,6 +4,9 @@ set -o emacs
 # expand alias => for vim
 shopt -s expand_aliases
 
+if [ ! -a ~/.inputrc ]; then echo '$include /etc/inputrc' > ~/.inputrc; fi
+echo 'set completion-ignore-case On' >> ~/.inputrc
+
 # p4 alias
 alias p4e='p4 edit'
 alias p4a='p4 add'

@@ -1,5 +1,6 @@
 # ~/.zshrc
 alias down="~/Downloads"
+alias wa="~/Walker"
 alias dev="ssh walker"
 alias ez="exec zsh -l"
 alias box="~/Dropbox"

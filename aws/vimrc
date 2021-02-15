@@ -14,6 +14,10 @@ Plug 'jeffkreeftmeijer/vim-dim'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/vim-easy-align'
 Plug 'zivyangll/git-blame.vim'
+Plug 'garbas/vim-snipmate'
+Plug 'honza/vim-snippets'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
 call plug#end()
 
 set rtp+=~/.fzf
@@ -66,12 +70,13 @@ set ruler
 set t_Co=256
 set autochdir
 set autoread
+set nofoldenable
 
 " Buffer
 set nostartofline
 
 " Autocomplete
-set complete-=i
+set complete=.,w,b,u
 set completeopt=longest,menuone
 
 " Performance
@@ -85,12 +90,11 @@ set wildmenu
 set background=dark
 color dim
 
+set tags=~/ctags/perl,~/ctags/javascript
+
 packadd! matchit
 
 command! S syntax sync fromstart
-
-" Default
-let $RTP=split(&runtimepath, ',')[0]
 
 " lightline {
     set laststatus=2
@@ -127,6 +131,7 @@ let $RTP=split(&runtimepath, ',')[0]
 " fzf {
     nnoremap <c-p> :FZF -i /ma<CR>
     command! F FZF -i
+    command! Fma FZF -i /ma/mediaalpha.com
 "}
 
 
@@ -139,6 +144,7 @@ let $RTP=split(&runtimepath, ',')[0]
     " delete buffer
     nmap <leader>d :bd<CR>
     nmap <leader>g :bufdo bd<CR>
+    nmap <leader>0 :%bd\|e#\|bd#<CR>
     " open new buffer
     nmap <leader>v :vsplit<CR>
     nmap <leader>s :split<CR>
@@ -164,7 +170,6 @@ let $RTP=split(&runtimepath, ',')[0]
     nmap <leader>7 <Plug>BufTabLine.Go(7)
     nmap <leader>8 <Plug>BufTabLine.Go(8)
     nmap <leader>9 <Plug>BufTabLine.Go(9)
-    nmap <leader>0 <Plug>BufTabLine.Go(10)
     " color scheme
     hi BufTabLineCurrent ctermfg=50
     hi BufTabLineHidden ctermfg=67
@@ -236,13 +241,6 @@ endif
     let g:AutoPairsWildClosedPair = ''
 " }
 
-" autochdir {
-    "autochdir for some plugins
-    " autocmd BufEnter * silent! lcd %:p:h
-    "command for quick directory change
-    nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
-" }
-
 " CamelCaseMotion {
    map <silent> w <Plug>CamelCaseMotion_w
    map <silent> b <Plug>CamelCaseMotion_b
@@ -260,11 +258,6 @@ endif
    sunmap ge
 "}
 
-" perforce {
-    command! PE !p4e %
-    command! PR !p4r %
-"}
-
 " sql.vim {
     " Disabled sql.vim mapping
     let g:omni_sql_no_default_maps = 1
@@ -276,11 +269,6 @@ endif
 
 " remap ESC
 inoremap <c-c> <ESC>
-
-" abbreviations
-iabb wd warn dump_pretty
-iabb pd print dump_pretty
-iabb idp info dump_pretty
 
 " EasyAlign
 nmap ga <Plug>(EasyAlign)
@@ -295,4 +283,17 @@ autocmd BufWinLeave <buffer> call clearmatches()
 let $BASH_ENV = "~/.bashrc"
 
 xmap <leader>y y:call SendViaOSC52(getreg('"'))<CR>
-nnoremap <Leader>bl :<C-u>call gitblame#echo()<CR>
+nnoremap <Leader>m :<C-u>call gitblame#echo()<CR>
+
+" netrw {
+    let g:netrw_banner = 0
+    let g:netrw_liststyle = 3
+    let g:netrw_browse_split = 2
+    let g:netrw_altv = 1
+" }
+
+let g:snipMate = get(g:, 'snipMate', {})
+let g:snipMate.scope_aliases = {}
+let g:snipMate.scope_aliases['mason,html,json'] = 'mason'
+
+command! Sfp set filetype=perl
