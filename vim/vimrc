@@ -155,7 +155,7 @@ endif
 
 " indentLine {
     let g:indentLine_concealcursor = 'inc'
-    let g:indentLine_conceallevel = 2
+    let g:indentLine_conceallevel = 0
 "}
 
 " learder {
@@ -205,7 +205,7 @@ endif
     nmap <leader>l :ls<CR>
     " delete buffer
     nmap <leader>d :bd<CR>
-    nmap <leader>g :bufdo bd<CR>
+    nmap <leader>g :bufdo bw<CR>
     " open new buffer
     nmap <leader>v :vsplit<CR>
     nmap <leader>s :split<CR>

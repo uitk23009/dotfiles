@@ -1,0 +1,171 @@
+{
+	"title": "FC660MBT",
+	"rules": [
+		{
+			"description": "Esc Modifiers to Backtick",
+			"manipulators": [
+				{
+					"type": "basic",
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": "xxxx",
+                                    "product_id": "xxxx"
+                                }
+                            ]
+                        }
+                    ],
+					"from": {
+						"key_code": "escape",
+						"modifiers": {
+							"mandatory": [
+								"left_command"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "grave_accent_and_tilde",
+							"modifiers": [
+								"left_command"
+							]
+						}
+					]
+				},
+				{
+					"type": "basic",
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": "xxxx",
+                                    "product_id": "xxxx"
+                                }
+                            ]
+                        }
+                    ],
+					"from": {
+						"key_code": "escape",
+						"modifiers": {
+							"mandatory": [
+								"left_option"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "grave_accent_and_tilde",
+							"modifiers": [
+								"left_option"
+							]
+						}
+					]
+				},
+				{
+					"type": "basic",
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": "xxxx",
+                                    "product_id": "xxxx"
+                                }
+                            ]
+                        }
+                    ],
+					"from": {
+						"key_code": "escape",
+						"modifiers": {
+							"mandatory": [
+								"left_control"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "grave_accent_and_tilde",
+							"modifiers": [
+								"left_control"
+							]
+						}
+					]
+				},
+				{
+					"type": "basic",
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": "xxxx",
+                                    "product_id": "xxxx"
+                                }
+                            ]
+                        }
+                    ],
+					"from": {
+						"key_code": "grave_accent_and_tilde",
+						"modifiers": {
+							"mandatory": [
+								"fn"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "escape"
+						}
+					]
+				},
+				{
+					"type": "basic",
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": "xxxx",
+                                    "product_id": "xxxx"
+                                }
+                            ]
+                        }
+                    ],
+					"from": {
+						"key_code": "escape"
+					},
+					"to": [
+						{
+							"key_code": "grave_accent_and_tilde"
+						}
+					]
+				},
+				{
+					"type": "basic",
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 2652,
+                                    "product_id": 34050
+                                }
+                            ]
+                        }
+                    ],
+					"from": {
+						"key_code": "grave_accent_and_tilde"
+					},
+					"to": [
+						{
+							"key_code": "escape"
+						}
+					]
+				}
+			]
+		}
+	]
+}
