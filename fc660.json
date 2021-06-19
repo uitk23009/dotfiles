@@ -11,8 +11,8 @@
                             "type": "device_if",
                             "identifiers": [
                                 {
-                                    "vendor_id": "xxxx",
-                                    "product_id": "xxxx"
+                                    "vendor_id": 2652,
+                                    "product_id": 34050
                                 }
                             ]
                         }
@@ -41,8 +41,8 @@
                             "type": "device_if",
                             "identifiers": [
                                 {
-                                    "vendor_id": "xxxx",
-                                    "product_id": "xxxx"
+                                    "vendor_id": 2652,
+                                    "product_id": 34050
                                 }
                             ]
                         }
@@ -71,38 +71,8 @@
                             "type": "device_if",
                             "identifiers": [
                                 {
-                                    "vendor_id": "xxxx",
-                                    "product_id": "xxxx"
-                                }
-                            ]
-                        }
-                    ],
-					"from": {
-						"key_code": "escape",
-						"modifiers": {
-							"mandatory": [
-								"left_control"
-							]
-						}
-					},
-					"to": [
-						{
-							"key_code": "grave_accent_and_tilde",
-							"modifiers": [
-								"left_control"
-							]
-						}
-					]
-				},
-				{
-					"type": "basic",
-                    "conditions": [
-                        {
-                            "type": "device_if",
-                            "identifiers": [
-                                {
-                                    "vendor_id": "xxxx",
-                                    "product_id": "xxxx"
+                                    "vendor_id": 2652,
+                                    "product_id": 34050
                                 }
                             ]
                         }
@@ -111,6 +81,7 @@
 						"key_code": "grave_accent_and_tilde",
 						"modifiers": {
 							"mandatory": [
+                                "left_control",
 								"fn"
 							]
 						}
@@ -128,8 +99,8 @@
                             "type": "device_if",
                             "identifiers": [
                                 {
-                                    "vendor_id": "xxxx",
-                                    "product_id": "xxxx"
+                                    "vendor_id": 2652,
+                                    "product_id": 34050
                                 }
                             ]
                         }

@@ -131,7 +131,6 @@ command! S syntax sync fromstart
 " fzf {
     nnoremap <c-p> :FZF -i /ma<CR>
     command! F FZF -i
-    command! Fma FZF -i /ma/mediaalpha.com
 "}
 
 
