@@ -21,7 +21,7 @@
 [fetch]
   prune = true
 [remote "origin"]
-  fetch = +refs/tags/*:refs/tags/*
+  fetch = +refs/heads/*:refs/remotes/origin/*
   prune = true
   pruneTags = true
 [pager]
