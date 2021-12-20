@@ -18,7 +18,7 @@ fi
 echo "Update Homebrew formulae..."
 brew update --force
 brew tap "homebrew/services"
-brew tap "caskroom/cask"
+brew tap "homebrew/cask"
 
 # command line tools
 brew install "git"
@@ -28,19 +28,18 @@ brew install "zsh"
 brew install "vim"
 brew install "tmux"
 brew install "openssl"
-brew install "ctop"
 brew install "htop"
 brew install "reattach-to-user-namespace"
 brew install "the_silver_searcher"
-brew install "yarn"
 brew install "coreutils"
 
 # mac tools
-brew cask install google-chrome firefox
-brew cask install iterm2
-brew cask install appcleaner
-brew cask install sizeup
-brew cask install karabiner-elements
+#brew install --cask firefox
+#brew install --cask iterm2
+#brew install --cask appcleaner
+#brew install --cask sizeup
+#brew install --cask karabiner-elements
+#brew install --cask dropbox
 
 brew cleanup
 
@@ -48,35 +47,33 @@ brew cleanup
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 
 # install dotfiles
+rm -rf ~/Walker/dotfiles
 git clone git@github.com:uitk23009/dotfiles.git ~/Walker/dotfiles
 
 # install z.sh
 wget https://raw.githubusercontent.com/rupa/z/master/z.sh -O ~/z.sh
 
 # install prezto
+rm -rf "${ZDOTDIR:-$HOME}/.zprezto"
+git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 zsh install_prezto.zsh
+chsh -s /bin/zsh
 
 # configure vim
 source vim_setting.sh
 
 # configure tmux
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-rm ~/.tmux.conf
+rm -rf ~/.tmux.conf
 ln -s ~/Walker/dotfiles/tmux/tmux.conf ~/.tmux.conf
-# install tmux plugins
-tmux start-server
-tmux new-session -d
-source ~/.tmux/plugins/tpm/scripts/install_plugins.sh
-tmux kill-server
 
-# configure tig
-rm ~/.tigrc
+# tig configuration
+rm -f ~/.tigrc
 ln -s ~/Walker/dotfiles/tigrc ~/.tigrc
 
-# configure editorconfig
-rm ~/.editorconfig
+# editorconfig configuration
+rm -f ~/.editorconfig
 ln -s ~/Walker/dotfiles/editorconfig ~/.editorconfig
 
-# configure gitconfig
-rm ~/.gitconfig
-ln -s ~/Walker/dotfiles/itconfig ~/.gitconfig
+# gitconfig configuration
+rm -f ~/.gitconfig
+ln -s ~/Walker/dotfiles/gitconfig ~/.gitconfig
