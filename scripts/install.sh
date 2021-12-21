@@ -3,6 +3,8 @@
 set -xv
 set -e
 
+git add -K ~/.ssh/id_rsa
+
 # install custom folder
 mkdir -p ~/Walker
 
@@ -13,6 +15,8 @@ if ! command -v brew >/dev/null; then
     echo "Install Homebrew"
 
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 echo "Update Homebrew formulae..."
@@ -32,14 +36,15 @@ brew install "htop"
 brew install "reattach-to-user-namespace"
 brew install "the_silver_searcher"
 brew install "coreutils"
+brew install "wget"
 
 # mac tools
-#brew install --cask firefox
-#brew install --cask iterm2
-#brew install --cask appcleaner
-#brew install --cask sizeup
-#brew install --cask karabiner-elements
-#brew install --cask dropbox
+brew install --cask google-chrome firefox
+brew install --cask iterm2
+brew install --cask appcleaner
+brew install --cask sizeup
+brew install --cask karabiner-elements
+brew install --cask dropbox
 
 brew cleanup
 
