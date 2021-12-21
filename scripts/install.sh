@@ -48,6 +48,8 @@ brew install --cask dropbox
 
 brew cleanup
 
+ssh-add -K ~/.ssh/id_rsa
+
 # install nvm
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 
