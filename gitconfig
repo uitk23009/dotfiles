@@ -1,6 +1,6 @@
 [user]
-  name = WalkerHo
-  email = uitk23009@gmail.com
+	name = walker-interlnkd
+  email = walker@interlnkd.com
 [color]
   diff = auto
   status = auto
@@ -21,7 +21,6 @@
 [fetch]
   prune = true
 [remote "origin"]
-  fetch = +refs/heads/*:refs/remotes/origin/*
   prune = true
   pruneTags = true
 [pager]

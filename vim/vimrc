@@ -15,7 +15,7 @@ Plug 'junegunn/vim-slash'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tpope/vim-unimpaired'
 Plug 'svermeulen/vim-easyclip'
-Plug 'vimwiki/vimwiki'
+Plug 'prabirshrestha/vim-lsp'
 
 " Linter
 Plug 'editorconfig/editorconfig-vim'
@@ -96,12 +96,6 @@ silent! colorscheme stellarized
 
 packadd! matchit
 
-augroup vueSyntax
-    autocmd!
-    " autocmd BufRead,BufNewFile *.vue set filetype=vue
-    autocmd BufEnter * :syntax sync fromstart
-augroup END
-
 if exists('$TMUX')
     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
     let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
@@ -110,33 +104,6 @@ else
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
-
-" Dictionary {
-    set complete+=k
-    set iskeyword+=-
-    autocmd FileType * call s:setDict()
-    function! s:setDict()
-        let dict = '~/.vim/dict/'
-        let type = expand('%:r:e')
-        let current_filetype = &filetype
-        if current_filetype == "vue"
-            exe 'set dictionary+='.dict.'css.txt' |
-            exe 'set dictionary+='.dict.'html.txt' |
-            exe 'set dictionary+='.dict.'javascript.txt'
-        else
-            if current_filetype == "javascript" && type == "spec"
-                exe 'set dictionary+='.dict.'vue-test-utils.txt' |
-                exe 'set dictionary+='.dict.'jest.txt'
-                exe 'set dictionary+='.dict.'javascript.txt'
-            else
-                let filepath = dict.current_filetype.'.txt'
-                if !empty(glob(filepath))
-                    exe 'set dictionary+='.dict.current_filetype.'.txt'
-                endif
-            endif
-        endif
-    endfunction
-"}
 
 " lightline {
     set laststatus=2
@@ -169,7 +136,6 @@ endif
     " close all open files
     command! Q qall
 "}
-
 " CamelCaseMotion {
     map <silent> w <Plug>CamelCaseMotion_w
     map <silent> b <Plug>CamelCaseMotion_b
@@ -308,11 +274,6 @@ endif
 " sql.vim {
     " Disabled sql.vim mapping
     let g:omni_sql_no_default_maps = 1
-" }
-
-" vimwiki.vim {
-    let g:vimwiki_list = [{'path': '~/Dropbox/Wiki',
-                            \ 'syntax': 'markdown', 'ext': '.md'}]
 " }
 
 " remap ESC

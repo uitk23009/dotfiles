@@ -96,9 +96,9 @@ function prompt_steeef_setup {
 
   # Define prompts.
   PROMPT="
-${_prompt_steeef_colors[5]}%~%f %F${_prompt_steeef_colors[1]}$(prompt_steeef_build_prompt)
-"%B%F{blue}❯%f%b" "
-  RPROMPT=''
+%F{34}[%D{%H:%M:%S}]${_prompt_steeef_colors[5]}%~%f %F${_prompt_steeef_colors[1]}$(prompt_steeef_build_prompt)
+%B%F{blue}❯%f%b "
+RPROMPT=''
 }
 
 prompt_steeef_setup "$@"

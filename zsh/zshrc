@@ -1,9 +1,10 @@
 # ~/.zshrc
 alias down="~/Downloads"
 alias wa="~/Walker"
-alias dev="ssh walker"
 alias ez="exec zsh -l"
-alias box="~/Dropbox"
+alias in="~/Interlnkd"
+alias sail="vendor/bin/sail"
+alias sa="sail artisan"
 
 # git alias
 alias gs="git status"
@@ -21,6 +22,10 @@ alias grc="git rebase --continue"
 alias gri="git rebase --interactive"
 alias grs="git rebase --skip"
 alias gsh="git stash"
+alias gshp="git stash pop"
+
+# Vapor
+alias vapor="php ~/.composer/vendor/bin/vapor"
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
@@ -40,6 +45,12 @@ source ~/z.sh
 # Change FZF_DEFAULT_COMMAND for finding hidden files
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 
-# Change default editor
-export VISUAL=vim
-export EDITOR="$VISUAL"
+export PATH="/opt/homebrew/opt/php@8.2/bin:$PATH"
+export PATH="/opt/homebrew/opt/php@8.2/sbin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi
+
+eval "$(zoxide init zsh)"
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+
+export LC_ALL=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
