@@ -38,12 +38,12 @@ brew install "wget"
 brew install "gcc"
 
 # mac tools
-brew install --cask google-chrome firefox brave
+brew install --cask google-chrome firefox brave-browser
 brew install --cask iterm2
 brew install --cask appcleaner
 brew install --cask sizeup
 brew install --cask karabiner-elements
-brea install --cask raycast
+brew install --cask raycast
 
 brew cleanup
 
@@ -83,5 +83,6 @@ rm -f ~/.gitconfig
 ln -s ~/Walker/dotfiles/gitconfig ~/.gitconfig
 
 # neovim configuration
+mkdir -p  ~/.config
 rm -rf ~/.config/nvim
 ln -s ~/Walker/dotfiles/nvim ~/.config/nvim
