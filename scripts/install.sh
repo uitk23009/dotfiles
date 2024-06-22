@@ -3,7 +3,7 @@
 set -xv
 set -e
 
-git add -K ~/.ssh/id_ed25519
+ssh-add ~/.ssh/id_ed25519
 
 # install custom folder
 mkdir -p ~/Walker
@@ -14,7 +14,7 @@ mkdir -p ~/Walker
 if ! command -v brew >/dev/null; then
     echo "Install Homebrew"
 
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
@@ -22,7 +22,6 @@ fi
 echo "Update Homebrew formulae..."
 brew update --force
 brew tap "homebrew/services"
-brew tap "homebrew/cask"
 
 # command line tools
 brew install "git"
@@ -36,6 +35,7 @@ brew install "reattach-to-user-namespace"
 brew install "the_silver_searcher"
 brew install "coreutils"
 brew install "wget"
+brew install "gcc"
 
 # mac tools
 brew install --cask google-chrome firefox brave
@@ -46,8 +46,6 @@ brew install --cask karabiner-elements
 brea install --cask raycast
 
 brew cleanup
-
-ssh-add -K ~/.ssh/id_ed25519
 
 # install nvm
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
