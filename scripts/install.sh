@@ -3,7 +3,7 @@
 set -xv
 set -e
 
-git add -K ~/.ssh/id_rsa
+git add -K ~/.ssh/id_ed25519
 
 # install custom folder
 mkdir -p ~/Walker
@@ -29,9 +29,8 @@ brew install "git"
 brew install "tig"
 brew install "diff-so-fancy"
 brew install "zsh"
-brew install "vim"
+brew install "nvim"
 brew install "tmux"
-brew install "openssl"
 brew install "htop"
 brew install "reattach-to-user-namespace"
 brew install "the_silver_searcher"
@@ -39,16 +38,16 @@ brew install "coreutils"
 brew install "wget"
 
 # mac tools
-brew install --cask google-chrome firefox
+brew install --cask google-chrome firefox brave
 brew install --cask iterm2
 brew install --cask appcleaner
 brew install --cask sizeup
 brew install --cask karabiner-elements
-brew install --cask dropbox
+brea install --cask raycast
 
 brew cleanup
 
-ssh-add -K ~/.ssh/id_rsa
+ssh-add -K ~/.ssh/id_ed25519
 
 # install nvm
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
@@ -84,3 +83,7 @@ ln -s ~/Walker/dotfiles/editorconfig ~/.editorconfig
 # gitconfig configuration
 rm -f ~/.gitconfig
 ln -s ~/Walker/dotfiles/gitconfig ~/.gitconfig
+
+# neovim configuration
+rm -rf ~/.config/nvim
+ln -s ~/Walker/dotfiles/nvim ~/.config/nvim
