@@ -11,6 +11,13 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+vim.cmd([[
+augroup BladePhpFileType
+  autocmd!
+  autocmd BufNewFile,BufRead *.blade.php set filetype=php
+augroup END
+]])
+
 require("options")
 require("keymap")
 require("lazy").setup("plugins")

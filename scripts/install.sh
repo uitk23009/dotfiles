@@ -36,6 +36,8 @@ brew install "the_silver_searcher"
 brew install "coreutils"
 brew install "wget"
 brew install "gcc"
+brew install "php"
+brew install "node"
 
 # mac tools
 brew install --cask google-chrome firefox brave-browser
