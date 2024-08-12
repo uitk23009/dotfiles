@@ -2,7 +2,7 @@ name: GitHub Actions B Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
   workflow_run:
-    workflows: ["Github Action A Demo"]
+    workflows: ["Github Actions A Demo"]
     types:
       - completed
     branches: [ master ]
