@@ -5,4 +5,4 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: exit 1
+      - run: echo ${{ github.event.workflow_run.conclusion == 'success' }}
